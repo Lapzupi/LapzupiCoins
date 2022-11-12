@@ -114,7 +114,7 @@ public final class Coins
             }
         }
 
-        if (this.disabledReasons.size() == 0)
+        if (this.disabledReasons.isEmpty())
         {
             this.settings = new Settings(this);
             reload();
@@ -145,7 +145,7 @@ public final class Coins
 
     public void reload ()
     {
-        if (this.disabledReasons.size() != 0)
+        if (!this.disabledReasons.isEmpty())
         {
             line(Level.SEVERE);
             console(Level.SEVERE, "Plugin 'Coins' is disabled, until issues are fixed and the server is rebooted (see start-up log of Coins).");

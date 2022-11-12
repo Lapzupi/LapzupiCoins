@@ -49,6 +49,8 @@ withdrawn-coin-names:
 # The material that coins should be made of.
 # Material list: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
 coin-item: 'sunflower'
+# Namespace for the item set to '' to disable
+items-adder: ''
 
 # You can also set a custom texture for the coin, as a skull. Filling this will
 #  ignore 'coin-item'. Input the text from the example page at "Other > Value" at
