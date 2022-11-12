@@ -130,7 +130,7 @@ public final class CoinsCommand
 
                     sender.sendMessage(Message.CURRENTLY_INSTALLED.replace(currentVersion));
 
-                    if (!latestVersion.isPresent())
+                    if (latestVersion.isEmpty())
                     {
                         sender.sendMessage(Message.LATEST_RETRIEVE_FAIL.toString());
                     }
@@ -256,7 +256,7 @@ public final class CoinsCommand
             Player onlinePlayer = Util.getOnlinePlayer(args[1]);
 
             Optional<Integer> amount = Util.parseInt(args[2]);
-            if (!amount.isPresent())
+            if (amount.isEmpty())
             {
                 sender.sendMessage(Message.INVALID_NUMBER.toString());
                 return;
@@ -271,7 +271,7 @@ public final class CoinsCommand
             if (args.length >= 4)
             {
                 Optional<Integer> r = Util.parseInt(args[3]);
-                if (!r.isPresent())
+                if (r.isEmpty())
                 {
                     sender.sendMessage(Message.INVALID_NUMBER.toString());
                     return;
@@ -372,7 +372,7 @@ public final class CoinsCommand
             if (!args[1].equalsIgnoreCase("all"))
             {
                 Optional<Integer> r2 = Util.parseInt(args[1]);
-                if (!r2.isPresent())
+                if (r2.isEmpty())
                 {
                     sender.sendMessage(Message.INVALID_RADIUS.toString());
                     return;
@@ -388,9 +388,8 @@ public final class CoinsCommand
 
         }
 
-        if (sender instanceof Player)
+        if (sender instanceof Player player)
         {
-            Player player = (Player) sender;
             mobs = player.getWorld().getEntities();
             if (r != 0)
             {
@@ -401,9 +400,8 @@ public final class CoinsCommand
         long amount = 0;
         for (Entity entity : mobs)
         {
-            if (entity instanceof Item)
+            if (entity instanceof Item item)
             {
-                Item item = (Item) entity;
                 if (this.coins.getCoinUtil().isCoin(item.getItemStack()))
                 {
                     amount++;

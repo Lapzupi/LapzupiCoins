@@ -91,7 +91,7 @@ public final class CoinUtil
             return 0;
 
         Optional<String> name = name(item);
-        if (!name.isPresent())
+        if (name.isEmpty())
             return 0;
 
         Matcher matcher = VALUE_PATTERN.matcher(ChatColor.stripColor(name.get()));

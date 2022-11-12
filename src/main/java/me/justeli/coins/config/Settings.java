@@ -170,7 +170,7 @@ public final class Settings
                 // can be improved in java 11
                 else if (configClass == Long.class || configClass == Integer.class || configClass == Float.class || configClass == Double.class)
                 {
-                    Double value = new Double(config.get(configKey, "0").toString());
+                    Double value = Double.parseDouble(config.get(configKey, "0").toString());
 
                     if (configClass == Long.class)
                     {
@@ -350,7 +350,7 @@ public final class Settings
     public void initializeMessages (String language)
     {
         Optional<JSONObject> json = retrieveLanguageJson(language);
-        if (!json.isPresent())
+        if (json.isEmpty())
         {
             this.coins.console(Level.WARNING, "Could not find the language file '" +  language + ".json' that was configured.");
         }
@@ -390,7 +390,7 @@ public final class Settings
     private Optional<JSONObject> retrieveLanguageJson (String language)
     {
         Optional<File> file = retrieveLanguageFile(language);
-        if (!file.isPresent())
+        if (file.isEmpty())
             return Optional.empty();
 
         try (InputStream fileStream = Files.newInputStream(file.get().toPath()))

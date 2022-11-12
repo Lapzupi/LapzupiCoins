@@ -204,7 +204,7 @@ public final class Coins
             return;
 
         VersionChecker checker = new VersionChecker("JustEli/Coins");
-        if (!checker.latestVersion().isPresent())
+        if (checker.latestVersion().isEmpty())
             return;
 
         this.latestVersion = checker.latestVersion().get();

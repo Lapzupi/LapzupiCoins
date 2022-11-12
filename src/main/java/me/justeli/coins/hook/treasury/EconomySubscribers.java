@@ -44,7 +44,7 @@ public final class EconomySubscribers
         {
             Objects.requireNonNull(failure, "failure");
 
-            return new EconomySubscriber<T>()
+            return new EconomySubscriber<>()
             {
                 @Override
                 public void succeed(@NotNull T t)

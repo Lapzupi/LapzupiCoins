@@ -51,13 +51,12 @@ public final class WithdrawCommand
             return false;
         }
 
-        if (!sender.hasPermission(Permission.WITHDRAW) || !(sender instanceof Player))
+        if (!sender.hasPermission(Permission.WITHDRAW) || !(sender instanceof Player player))
         {
             noPerm(sender);
             return true;
         }
 
-        Player player = (Player) sender;
         if (Util.isDisabledHere(player.getWorld()))
         {
             sender.sendMessage(Message.COINS_DISABLED.toString());
