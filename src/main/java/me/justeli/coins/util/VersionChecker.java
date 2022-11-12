@@ -11,17 +11,19 @@ import java.net.URLConnection;
 import java.time.Instant;
 import java.util.Optional;
 
-/** by Eli on February 04, 2022 **/
+/**
+ * by Eli on February 04, 2022
+ **/
 public final class VersionChecker
 {
     private Version latestVersion;
 
-    public Optional<Version> latestVersion ()
+    public Optional<Version> latestVersion()
     {
         return Optional.of(this.latestVersion);
     }
 
-    public VersionChecker (String repository)
+    public VersionChecker(String repository)
     {
         try
         {
@@ -34,21 +36,23 @@ public final class VersionChecker
 
             JsonParser jsonParser = new JsonParser();
             try (
-                    InputStream inputStream = (InputStream) request.getContent();
-                    InputStreamReader reader = new InputStreamReader(inputStream)
+                InputStream inputStream = (InputStream) request.getContent();
+                InputStreamReader reader = new InputStreamReader(inputStream)
             )
             {
                 JsonElement root = jsonParser.parse(reader);
                 JsonObject jsonObject = root.getAsJsonObject();
                 this.latestVersion = new Version(
-                        jsonObject.get("tag_name").getAsString(),
-                        jsonObject.get("prerelease").getAsBoolean(),
-                        jsonObject.get("name").getAsString(),
-                        jsonObject.get("published_at").getAsString()
+                    jsonObject.get("tag_name").getAsString(),
+                    jsonObject.get("prerelease").getAsBoolean(),
+                    jsonObject.get("name").getAsString(),
+                    jsonObject.get("published_at").getAsString()
                 );
             }
         }
-        catch (Exception ignored) {}
+        catch (Exception ignored)
+        {
+        }
     }
 
     public static class Version
@@ -58,7 +62,7 @@ public final class VersionChecker
         private final String name;
         private final long time;
 
-        public Version (String tag, boolean preRelease, String name, String time)
+        public Version(String tag, boolean preRelease, String name, String time)
         {
             this.tag = tag;
             this.preRelease = preRelease;
@@ -66,32 +70,32 @@ public final class VersionChecker
             this.time = Instant.parse(time).toEpochMilli();
         }
 
-        public String tag ()
+        public String tag()
         {
             return this.tag;
         }
 
-        public boolean preRelease ()
+        public boolean preRelease()
         {
             return this.preRelease;
         }
 
-        public String name ()
+        public String name()
         {
             return this.name;
         }
 
-        public long time ()
+        public long time()
         {
             return this.time;
         }
 
         @Override
-        public boolean equals (Object version)
+        public boolean equals(Object version)
         {
             return this.tag == null || !(version instanceof Version)
-                    ? super.equals(version)
-                    : this.tag.equals(((Version) version).tag);
+                ? super.equals(version)
+                : this.tag.equals(((Version) version).tag);
         }
     }
 }

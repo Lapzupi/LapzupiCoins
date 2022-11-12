@@ -11,64 +11,66 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Optional;
 import java.util.logging.Level;
 
-/** by Eli on January 30, 2022 **/
+/**
+ * by Eli on January 30, 2022
+ **/
 public final class MetaBuilder
-        implements Cloneable
+    implements Cloneable
 {
     private final Coins coins;
 
     private final ItemStack itemStack;
     private final ItemMeta itemMeta;
 
-    public MetaBuilder (Coins coins, ItemStack itemStack)
+    public MetaBuilder(Coins coins, ItemStack itemStack)
     {
         this.coins = coins;
         this.itemStack = itemStack;
         this.itemMeta = itemStack.getItemMeta();
     }
 
-    public MetaBuilder name (String name)
+    public MetaBuilder name(String name)
     {
         this.itemMeta.setDisplayName(Util.color(name));
         return this;
     }
 
-    public MetaBuilder data (String key, Integer value)
+    public MetaBuilder data(String key, Integer value)
     {
         this.itemMeta.getPersistentDataContainer().set(
-                new NamespacedKey(this.coins, key),
-                PersistentDataType.INTEGER, value
+            new NamespacedKey(this.coins, key),
+            PersistentDataType.INTEGER, value
         );
         return this;
     }
 
-    public MetaBuilder data (String key, Double value)
+    public MetaBuilder data(String key, Double value)
     {
         this.itemMeta.getPersistentDataContainer().set(
-                new NamespacedKey(this.coins, key),
-                PersistentDataType.DOUBLE, value
+            new NamespacedKey(this.coins, key),
+            PersistentDataType.DOUBLE, value
         );
         return this;
     }
 
-    public <T> Optional<T> data (String key, @NotNull PersistentDataType<T, T> type)
+    public <T> Optional<T> data(String key, @NotNull PersistentDataType<T, T> type)
     {
         if (this.itemMeta == null)
             return Optional.empty();
 
         return Optional.ofNullable(this.itemMeta.getPersistentDataContainer().get(
-                new NamespacedKey(this.coins, key), type
+            new NamespacedKey(this.coins, key), type
         ));
     }
 
-    public ItemStack build ()
+    public ItemStack build()
     {
         this.itemStack.setItemMeta(this.itemMeta);
         return this.itemStack;
     }
 
     @Override
-    public MetaBuilder clone ()
+    public MetaBuilder clone()
     {
         final MetaBuilder clone;
         try

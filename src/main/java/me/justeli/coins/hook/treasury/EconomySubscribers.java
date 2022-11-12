@@ -8,23 +8,27 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-/** by Rezz on February 02, 2022 **/
+/**
+ * by Rezz on February 02, 2022
+ **/
 public final class EconomySubscribers
 {
-    private EconomySubscribers() {}
-    
+    private EconomySubscribers()
+    {
+    }
+
     @SuppressWarnings("unused")
     public static <T> SubscriberBuilder.PendingSuccess<T> requesting(Class<T> clazz)
     {
         return pendingSuccess();
     }
-    
+
     @SuppressWarnings("unused")
     public static <T> SubscriberBuilder.PendingSuccess<T> requesting(TypeToken<T> type)
     {
         return pendingSuccess();
     }
-    
+
     private static <T> SubscriberBuilder.PendingSuccess<T> pendingSuccess()
     {
         return success ->
@@ -33,24 +37,30 @@ public final class EconomySubscribers
             return pendingFailure(success);
         };
     }
-    
+
     private static <T> SubscriberBuilder.PendingFailure<T> pendingFailure(Consumer<T> success)
     {
         return failure ->
         {
             Objects.requireNonNull(failure, "failure");
-            
+
             return new EconomySubscriber<T>()
             {
                 @Override
-                public void succeed(@NotNull T t) { success.accept(t); }
-    
+                public void succeed(@NotNull T t)
+                {
+                    success.accept(t);
+                }
+
                 @Override
-                public void fail(@NotNull EconomyException exception) { failure.accept(exception); }
+                public void fail(@NotNull EconomyException exception)
+                {
+                    failure.accept(exception);
+                }
             };
         };
     }
-    
+
     public interface SubscriberBuilder<T>
     {
         @FunctionalInterface
@@ -58,13 +68,18 @@ public final class EconomySubscribers
         {
             PendingFailure<T> success(Consumer<T> success);
         }
-        
+
         @FunctionalInterface
         interface PendingFailure<T> extends SubscriberBuilder<T>
         {
             EconomySubscriber<T> failure(Consumer<EconomyException> failure);
-            
-            default EconomySubscriber<T> silentFailure() { return failure(ex -> {}); }
+
+            default EconomySubscriber<T> silentFailure()
+            {
+                return failure(ex ->
+                {
+                });
+            }
         }
     }
 }

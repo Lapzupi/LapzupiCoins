@@ -11,17 +11,19 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Locale;
 import java.util.function.Consumer;
 
-/** Created by Eli on July 09, 2021. */
+/**
+ * Created by Eli on July 09, 2021.
+ */
 public final class Metrics
 {
     private final Coins coins;
 
-    public Metrics (Coins coins)
+    public Metrics(Coins coins)
     {
         this.coins = coins;
     }
 
-    public static void metrics (JavaPlugin plugin, final Consumer<Metric> consumer)
+    public static void metrics(JavaPlugin plugin, final Consumer<Metric> consumer)
     {
         org.bstats.bukkit.Metrics metrics = new org.bstats.bukkit.Metrics(plugin, 831);
         consumer.accept(new Metric(metrics));
@@ -31,12 +33,12 @@ public final class Metrics
     {
         private final org.bstats.bukkit.Metrics metrics;
 
-        public Metric (org.bstats.bukkit.Metrics metrics)
+        public Metric(org.bstats.bukkit.Metrics metrics)
         {
             this.metrics = metrics;
         }
 
-        public void add (String key, Object value)
+        public void add(String key, Object value)
         {
             if (value == null || value.toString() == null)
                 return;
@@ -45,7 +47,7 @@ public final class Metrics
         }
     }
 
-    public void register ()
+    public void register()
     {
         metrics(this.coins, metrics ->
         {

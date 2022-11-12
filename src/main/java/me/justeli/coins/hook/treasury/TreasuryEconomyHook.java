@@ -11,20 +11,22 @@ import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.function.DoubleConsumer;
 
-/** by Rezz on February 02, 2022 **/
+/**
+ * by Rezz on February 02, 2022
+ **/
 public final class TreasuryEconomyHook implements EconomyHook
 {
     public static final String TREASURY = "Treasury";
-    
+
     private final EconomyProvider economy;
-    
-    public TreasuryEconomyHook (EconomyProvider economy)
+
+    public TreasuryEconomyHook(EconomyProvider economy)
     {
         this.economy = economy;
     }
-    
+
     @Override
-    public void balance (UUID uuid, DoubleConsumer balance)
+    public void balance(UUID uuid, DoubleConsumer balance)
     {
         economy.retrievePlayerAccount(
             uuid,
@@ -40,9 +42,9 @@ public final class TreasuryEconomyHook implements EconomyHook
                 .silentFailure()
         );
     }
-    
+
     @Override
-    public void canAfford (UUID uuid, double amount, Consumer<Boolean> canAfford)
+    public void canAfford(UUID uuid, double amount, Consumer<Boolean> canAfford)
     {
         economy.retrievePlayerAccount(
             uuid,
@@ -59,11 +61,11 @@ public final class TreasuryEconomyHook implements EconomyHook
                 .silentFailure()
         );
     }
-    
+
     @Override
-    public void withdraw (UUID uuid, double amount, Runnable success)
+    public void withdraw(UUID uuid, double amount, Runnable success)
     {
-         economy.retrievePlayerAccount(
+        economy.retrievePlayerAccount(
             uuid,
             EconomySubscribers.requesting(PlayerAccount.class)
                 .success(playerAccount ->
@@ -79,9 +81,9 @@ public final class TreasuryEconomyHook implements EconomyHook
                 .silentFailure()
         );
     }
-    
+
     @Override
-    public void deposit (UUID uuid, double amount, Runnable success)
+    public void deposit(UUID uuid, double amount, Runnable success)
     {
         economy.retrievePlayerAccount(
             uuid,
@@ -101,7 +103,7 @@ public final class TreasuryEconomyHook implements EconomyHook
     }
 
     @Override
-    public Optional<String> name ()
+    public Optional<String> name()
     {
         return Optional.of(TREASURY);
     }

@@ -19,7 +19,7 @@ public final class MythicMobsHook5
         this.coins = coins;
     }
 
-    private final static BukkitAPIHelper BUKKIT_API_HELPER = new BukkitAPIHelper();
+    private static final BukkitAPIHelper BUKKIT_API_HELPER = new BukkitAPIHelper();
 
     @Override
     public boolean isMythicMob (Entity entity)

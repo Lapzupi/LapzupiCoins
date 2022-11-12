@@ -12,12 +12,14 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/** by Eli on January 30, 2022 **/
+/**
+ * by Eli on January 30, 2022
+ **/
 public final class CoinUtil
 {
     private final Coins coins;
 
-    public CoinUtil (Coins coins)
+    public CoinUtil(Coins coins)
     {
         this.coins = coins;
     }
@@ -37,7 +39,7 @@ public final class CoinUtil
     public static final String COINS_RANDOM = "coins-random";
     public static final String COINS_INCREMENT = "coins-increment";
 
-    public boolean isCoin (ItemStack item)
+    public boolean isCoin(ItemStack item)
     {
         if (item == null)
             return false;
@@ -51,7 +53,7 @@ public final class CoinUtil
         return isWithdrawnCoin(item);
     }
 
-    public boolean isDroppedCoin (ItemStack item)
+    public boolean isDroppedCoin(ItemStack item)
     {
         if (item == null)
             return false;
@@ -59,7 +61,7 @@ public final class CoinUtil
         return this.coins.meta(item).data(COINS_TYPE, PersistentDataType.INTEGER).orElse(0) == TYPE_DROPPED;
     }
 
-    public boolean isWithdrawnCoin (ItemStack item)
+    public boolean isWithdrawnCoin(ItemStack item)
     {
         if (item == null)
             return false;
@@ -75,7 +77,7 @@ public final class CoinUtil
 
     private static final Pattern VALUE_PATTERN = Pattern.compile("[\\d.]+");
 
-    public double getValue (ItemStack item)
+    public double getValue(ItemStack item)
     {
         if (item == null)
             return 0;
@@ -95,8 +97,14 @@ public final class CoinUtil
         Matcher matcher = VALUE_PATTERN.matcher(ChatColor.stripColor(name.get()));
         if (matcher.find())
         {
-            try { return NumberFormat.getInstance().parse(matcher.group(0)).doubleValue() * item.getAmount(); }
-            catch (ParseException exception) { return 0; }
+            try
+            {
+                return NumberFormat.getInstance().parse(matcher.group(0)).doubleValue() * item.getAmount();
+            }
+            catch (ParseException exception)
+            {
+                return 0;
+            }
         }
         else
         {
@@ -104,12 +112,12 @@ public final class CoinUtil
         }
     }
 
-    public double getIncrement (ItemStack item)
+    public double getIncrement(ItemStack item)
     {
         return this.coins.meta(item).data(COINS_INCREMENT, PersistentDataType.DOUBLE).orElse(1D);
     }
 
-    private static Optional<String> name (ItemStack item)
+    private static Optional<String> name(ItemStack item)
     {
         if (item == null || item.getItemMeta() == null || !item.getItemMeta().hasDisplayName())
             return Optional.empty();

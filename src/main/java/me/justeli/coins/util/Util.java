@@ -36,31 +36,33 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/** Created by Eli on 6 jan. 2020. */
+/**
+ * Created by Eli on 6 jan. 2020.
+ */
 public final class Util
 {
     private static final Pattern HEX_PATTERN = Pattern.compile("(?<!\\\\)(&#[a-fA-F\\d]{6})");
     private static final HashMap<UUID, Double> PLAYER_MULTIPLIER = new HashMap<>();
     private static final SplittableRandom RANDOM = new SplittableRandom();
 
-    public static String color (@NotNull String msg)
+    public static String color(@NotNull String msg)
     {
         return ChatColor.translateAlternateColorCodes('&', parseRGB(msg));
     }
 
-    public static String formatAmountAndCurrency (String text, double amount)
+    public static String formatAmountAndCurrency(String text, double amount)
     {
         String displayAmount = doubleToString(amount);
         return formatCurrency(text.replaceAll("(%amount%|\\{amount})", Matcher.quoteReplacement(displayAmount)));
     }
 
-    public static String formatCurrency (String text)
+    public static String formatCurrency(String text)
     {
         // {currency} or {$}
         return text.replaceAll("(\\{currency}|\\{\\$})", Matcher.quoteReplacement(Config.CURRENCY_SYMBOL));
     }
 
-    private static String parseRGB (@NotNull String msg)
+    private static String parseRGB(@NotNull String msg)
     {
         if (PaperLib.getMinecraftVersion() >= 16)
         {
@@ -78,12 +80,12 @@ public final class Util
         return msg;
     }
 
-    public static void resetMultiplier ()
+    public static void resetMultiplier()
     {
         PLAYER_MULTIPLIER.clear();
     }
 
-    public static double getMultiplier (Player player)
+    public static double getMultiplier(Player player)
     {
         if (!PLAYER_MULTIPLIER.containsKey(player.getUniqueId()))
         {
@@ -96,29 +98,29 @@ public final class Util
                     permissions.add(Permission.multiplierFromPermission(permission));
                 }
             }
-            PLAYER_MULTIPLIER.put(player.getUniqueId(), permissions.size() == 0? 1D : Collections.max(permissions));
+            PLAYER_MULTIPLIER.put(player.getUniqueId(), permissions.size() == 0 ? 1D : Collections.max(permissions));
         }
         return PLAYER_MULTIPLIER.computeIfAbsent(player.getUniqueId(), empty -> 1D);
     }
 
-    public static boolean isHostile (Entity entity)
+    public static boolean isHostile(Entity entity)
     {
         return entity instanceof Monster
-                || entity instanceof Flying
-                || entity instanceof Slime
-                || (entity instanceof Golem && !(entity instanceof Snowman))
-                || (entity instanceof Wolf && ((Wolf) entity).isAngry())
-                || entity instanceof Boss;
+            || entity instanceof Flying
+            || entity instanceof Slime
+            || (entity instanceof Golem && !(entity instanceof Snowman))
+            || (entity instanceof Wolf && ((Wolf) entity).isAngry())
+            || entity instanceof Boss;
     }
 
-    public static boolean isPassive (Entity entity)
+    public static boolean isPassive(Entity entity)
     {
         return !isHostile(entity)
-                && !(entity instanceof Player)
-                && entity instanceof LivingEntity;
+            && !(entity instanceof Player)
+            && entity instanceof LivingEntity;
     }
 
-    public static Player getOnlinePlayer (String incomplete)
+    public static Player getOnlinePlayer(String incomplete)
     {
         for (Player player : Bukkit.getServer().getOnlinePlayers())
         {
@@ -138,15 +140,15 @@ public final class Util
         return null;
     }
 
-    public static void playCoinPickupSound (Player player)
+    public static void playCoinPickupSound(Player player)
     {
         float volume = Config.SOUND_VOLUME;
         float pitch = Config.SOUND_PITCH;
 
-        player.playSound(player.getEyeLocation(), Config.SOUND_NAME, volume == 0? 0.3f : volume, pitch == 0? 0.3f : pitch);
+        player.playSound(player.getEyeLocation(), Config.SOUND_NAME, volume == 0 ? 0.3f : volume, pitch == 0 ? 0.3f : pitch);
     }
 
-    public static boolean isDisabledHere (@Nullable World world)
+    public static boolean isDisabledHere(@Nullable World world)
     {
         if (world == null)
             return true;
@@ -154,7 +156,7 @@ public final class Util
         return Config.DISABLED_WORLDS.contains(world.getName());
     }
 
-    public static double getRandomMoneyAmount ()
+    public static double getRandomMoneyAmount()
     {
         double second = Config.MONEY_AMOUNT_FROM;
         double first = Config.MONEY_AMOUNT_TO - second;
@@ -162,7 +164,7 @@ public final class Util
         return RANDOM.nextDouble() * first + second;
     }
 
-    public static double getRandomTakeAmount ()
+    public static double getRandomTakeAmount()
     {
         double second = Config.MONEY_TAKEN_FROM;
         double first = Config.MONEY_TAKEN_TO - second;
@@ -170,32 +172,44 @@ public final class Util
         return RANDOM.nextDouble() * first + second;
     }
 
-    public static double round (double value)
+    public static double round(double value)
     {
         return BigDecimal.valueOf(value).setScale(Config.MONEY_DECIMALS, RoundingMode.HALF_UP).doubleValue();
     }
 
-    public static String doubleToString (double input)
+    public static String doubleToString(double input)
     {
         return String.format("%." + Config.MONEY_DECIMALS + "f", round(input));
     }
 
-    public static Optional<Integer> parseInt (String arg)
+    public static Optional<Integer> parseInt(String arg)
     {
-        try { return Optional.of(Integer.parseInt(arg)); }
-        catch (NumberFormatException exception) { return Optional.empty(); }
+        try
+        {
+            return Optional.of(Integer.parseInt(arg));
+        }
+        catch (NumberFormatException exception)
+        {
+            return Optional.empty();
+        }
     }
 
-    public static Optional<Double> parseDouble (String arg)
+    public static Optional<Double> parseDouble(String arg)
     {
-        try { return Optional.of(Util.round(new Double(arg))); }
-        catch (NumberFormatException exception) { return Optional.empty(); }
+        try
+        {
+            return Optional.of(Util.round(Double.parseDouble(arg)));
+        }
+        catch (NumberFormatException exception)
+        {
+            return Optional.empty();
+        }
     }
 
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MMMM d, yyyy");
 
     // page starts at 1
-    public static ArrayList<String> page (ArrayList<String> items, int pageSize, int pageNumber)
+    public static List<String> page(List<String> items, int pageSize, int pageNumber)
     {
         if (pageNumber <= 0)
         {
@@ -214,7 +228,7 @@ public final class Util
         return pages;
     }
 
-    public static Optional<Player> getRootDamage (LivingEntity dead)
+    public static Optional<Player> getRootDamage(LivingEntity dead)
     {
         if (dead.getKiller() != null)
         {
@@ -230,7 +244,7 @@ public final class Util
         return Optional.empty();
     }
 
-    public static Optional<Player> getRootDamage (EntityDamageByEntityEvent damageEvent)
+    public static Optional<Player> getRootDamage(EntityDamageByEntityEvent damageEvent)
     {
         Entity attacker = damageEvent.getDamager();
         if (attacker instanceof Player)

@@ -10,25 +10,25 @@ import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 
 public final class MythicMobsHook4
-        implements MMHook
+    implements MMHook
 {
     private final Coins coins;
 
-    public MythicMobsHook4 (Coins coins)
+    public MythicMobsHook4(Coins coins)
     {
         this.coins = coins;
     }
 
-    private final static BukkitAPIHelper BUKKIT_API_HELPER = new BukkitAPIHelper();
+    private static final BukkitAPIHelper BUKKIT_API_HELPER = new BukkitAPIHelper();
 
     @Override
-    public boolean isMythicMob (Entity entity)
+    public boolean isMythicMob(Entity entity)
     {
         return BUKKIT_API_HELPER.isMythicMob(entity);
     }
 
     @EventHandler
-    public void onMythicDropLoad (MythicDropLoadEvent event)
+    public void onMythicDropLoad(MythicDropLoadEvent event)
     {
         if (event.getDropName().equalsIgnoreCase("coins"))
         {
