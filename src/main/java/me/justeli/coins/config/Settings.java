@@ -324,7 +324,7 @@ public final class Settings
 
     private static final Converter<String, String> VAR_CONVERTER = CaseFormat.UPPER_UNDERSCORE.converterTo(CaseFormat.LOWER_HYPHEN);
 
-    public TreeSet<String> getKeys ()
+    public Set<String> getKeys ()
     {
         TreeSet<String> values = new TreeSet<>();
 
@@ -373,7 +373,7 @@ public final class Settings
             }
         }
 
-        if (missingKeys.size() > 0)
+        if (!missingKeys.isEmpty())
         {
             warning("Language file '" + language + "' is missing the message(s) '" + String.join("', '", missingKeys) +
                     "'. Using the default value(s) now, which are in English. You can find the up-to-date default configured messages at:" +

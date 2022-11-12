@@ -29,8 +29,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.Set;
 import java.util.SplittableRandom;
-import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /** Created by Eli on 26 dec 2018. */
@@ -51,7 +51,7 @@ public final class CoinsCommand
         return command;
     }
 
-    private final static SplittableRandom RANDOM = new SplittableRandom();
+    private static final SplittableRandom RANDOM = new SplittableRandom();
 
     @Override
     public boolean onCommand (@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args)
@@ -87,7 +87,7 @@ public final class CoinsCommand
                 if (perm(sender, Permission.COMMAND_SETTINGS))
                 {
                     int page = args.length > 1? Util.parseInt(args[1]).orElse(1) : 1;
-                    TreeSet<String> keys = this.coins.settings().getKeys();
+                    Set<String> keys = this.coins.settings().getKeys();
                     int totalPages = keys.size() / 8 + Math.min(keys.size() % 8, 1);
 
                     sender.sendMessage(String.format(COINS_TITLE, "Settings") + Util.color(" &7" + page + "&8/&7" + totalPages));
@@ -304,9 +304,9 @@ public final class CoinsCommand
                         {
                             world = this.coins.getServer().getWorld(coords[3]);
                         }
-                        if (world == null && sender instanceof Player)
+                        if (world == null && sender instanceof Player player)
                         {
-                            world = ((Player) sender).getWorld();
+                            world = player.getWorld();
                         }
                         if (world == null)
                         {
