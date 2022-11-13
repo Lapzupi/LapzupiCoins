@@ -12,6 +12,7 @@ import me.justeli.coins.handler.UnfairMobHandler;
 import me.justeli.coins.handler.listener.BukkitEventListener;
 import me.justeli.coins.handler.PickupHandler;
 import me.justeli.coins.handler.DropHandler;
+import me.justeli.coins.handler.listener.ItemsAdderLoadListener;
 import me.justeli.coins.handler.listener.PaperEventListener;
 import me.justeli.coins.hook.mythicmobs.MMHook;
 import me.justeli.coins.hook.bstats.Metrics;
@@ -237,7 +238,7 @@ public final class Coins
         manager.registerEvents(new InteractionHandler(this), this);
         manager.registerEvents(new InventoryHandler(this), this);
         manager.registerEvents(new ModificationHandler(this), this);
-
+        manager.registerEvents(new ItemsAdderLoadListener(this),this);
         if (mmHook().isPresent())
         {
             manager.registerEvents(this.mmHook, this);

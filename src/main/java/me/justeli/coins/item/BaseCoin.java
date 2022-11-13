@@ -21,7 +21,7 @@ public final class BaseCoin
     private ItemStack getBaseItem()
     {
         final String texture = Config.SKULL_TEXTURE;
-        if (!Config.ITEMS_ADDER.isEmpty())
+        if (!Config.ITEMS_ADDER.isEmpty() && CustomStack.getInstance(Config.ITEMS_ADDER) != null)
         {
             return CustomStack.getInstance(Config.ITEMS_ADDER).getItemStack();
         }
