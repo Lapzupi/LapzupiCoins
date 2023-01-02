@@ -17,12 +17,16 @@ public final class BukkitEventListener
     {
         this.coins = coins;
     }
+    
+    
+    
 
     @EventHandler (ignoreCancelled = true)
     public void onPickupBukkit (EntityPickupItemEvent event)
     {
         if (!(event.getEntity() instanceof Player))
             return;
+
 
         PickupEvent registerEvent = new PickupEvent((Player) event.getEntity(), event.getItem());
         this.coins.getServer().getPluginManager().callEvent(registerEvent);

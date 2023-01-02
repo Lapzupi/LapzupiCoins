@@ -23,14 +23,14 @@ public class ItemsAdderLoadListener implements Listener
         this.coins.reload();
         int warnings = this.coins.settings().getWarningCount();
         long ms = System.currentTimeMillis();
-        this.coins.getLogger().info(Message.RELOAD_SUCCESS.replace(Long.toString(System.currentTimeMillis() - ms)));
+        this.coins.getLogger().info(() -> Message.RELOAD_SUCCESS.replace(Long.toString(System.currentTimeMillis() - ms)));
         if (warnings != 0)
         {
-            this.coins.getLogger().info(Message.MINOR_ISSUES.toString());
+            this.coins.getLogger().info(Message.MINOR_ISSUES::toString);
         }
         else
         {
-            this.coins.getLogger().info(Message.CHECK_SETTINGS.toString());
+            this.coins.getLogger().info(Message.CHECK_SETTINGS::toString);
         }
     }
 }

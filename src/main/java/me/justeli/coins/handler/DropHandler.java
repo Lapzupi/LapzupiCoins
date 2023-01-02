@@ -55,37 +55,37 @@ public final class DropHandler
         if (this.coins.isDisabled())
             return;
 
-        LivingEntity dead = event.getEntity();
+        LivingEntity deadEntity = event.getEntity();
 
-        if (Util.isDisabledHere(dead.getWorld()))
+        if (Util.isDisabledHere(deadEntity.getWorld()))
             return;
 
-        if (this.coins.mmHook().isPresent() && Config.DISABLE_MYTHIC_MOB_HANDLING && this.coins.mmHook().get().isMythicMob(dead))
+        if (this.coins.mmHook().isPresent() && Config.DISABLE_MYTHIC_MOB_HANDLING && this.coins.mmHook().get().isMythicMob(deadEntity))
             return;
 
-        if (Config.LOSE_ON_DEATH && dead instanceof Player)
+        if (Config.LOSE_ON_DEATH && deadEntity instanceof Player deadPlayer)
         {
-            loseOnDeathHandler((Player) dead);
+            loseOnDeathHandler(deadPlayer);
         }
 
         if (Config.DROP_WITH_ANY_DEATH)
         {
-            mobChecker(dead, null);
+            mobChecker(deadEntity, null);
             return;
         }
 
-        AttributeInstance maxHealth = dead.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        AttributeInstance maxHealth = deadEntity.getAttribute(Attribute.GENERIC_MAX_HEALTH);
         if (maxHealth == null)
             return;
 
-        if (Config.PERCENTAGE_PLAYER_HIT > 0 && getPlayerDamage(dead) / maxHealth.getValue() < Config.PERCENTAGE_PLAYER_HIT)
+        if (Config.PERCENTAGE_PLAYER_HIT > 0 && getPlayerDamage(deadEntity) / maxHealth.getValue() < Config.PERCENTAGE_PLAYER_HIT)
             return;
 
-        Optional<Player> attacker = Util.getRootDamage(dead);
+        Optional<Player> attacker = Util.getRootDamage(deadEntity);
         if (attacker.isEmpty())
             return;
 
-        mobChecker(dead, attacker.get());
+        mobChecker(deadEntity, attacker.get());
     }
 
     private void loseOnDeathHandler (@NotNull Player dead)

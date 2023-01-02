@@ -98,7 +98,7 @@ public final class Util
                     permissions.add(Permission.multiplierFromPermission(permission));
                 }
             }
-            PLAYER_MULTIPLIER.put(player.getUniqueId(), permissions.size() == 0 ? 1D : Collections.max(permissions));
+            PLAYER_MULTIPLIER.put(player.getUniqueId(), permissions.isEmpty() ? 1D : Collections.max(permissions));
         }
         return PLAYER_MULTIPLIER.computeIfAbsent(player.getUniqueId(), empty -> 1D);
     }
@@ -177,6 +177,7 @@ public final class Util
         return BigDecimal.valueOf(value).setScale(Config.MONEY_DECIMALS, RoundingMode.HALF_UP).doubleValue();
     }
 
+    //Ignore warning here
     public static String doubleToString(double input)
     {
         return String.format("%." + Config.MONEY_DECIMALS + "f", round(input));
@@ -236,9 +237,9 @@ public final class Util
         }
 
         EntityDamageEvent damageCause = dead.getLastDamageCause();
-        if (damageCause instanceof EntityDamageByEntityEvent)
+        if (damageCause instanceof EntityDamageByEntityEvent entityDamageByEntityEvent)
         {
-            return getRootDamage((EntityDamageByEntityEvent) damageCause);
+            return getRootDamage(entityDamageByEntityEvent);
         }
 
         return Optional.empty();
@@ -247,9 +248,9 @@ public final class Util
     public static Optional<Player> getRootDamage(EntityDamageByEntityEvent damageEvent)
     {
         Entity attacker = damageEvent.getDamager();
-        if (attacker instanceof Player)
+        if (attacker instanceof Player player)
         {
-            return Optional.of((Player) attacker);
+            return Optional.of(player);
         }
 
         if (!(attacker instanceof Projectile))
@@ -258,9 +259,9 @@ public final class Util
         }
 
         ProjectileSource shooter = ((Projectile) attacker).getShooter();
-        if (shooter instanceof Player)
+        if (shooter instanceof Player player)
         {
-            return Optional.of((Player) shooter);
+            return Optional.of(player);
         }
 
         return Optional.empty();

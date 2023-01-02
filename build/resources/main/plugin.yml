@@ -1,9 +1,9 @@
-main: 'me.justeli.coins.${name}'
-name: '${name}'
-version: '${version}'
-website: '${website}'
-description: '${description}'
-api-version: '${api}'
+main: 'me.justeli.coins.Coins'
+name: 'Coins'
+version: '1.13.0'
+website: 'https://www.spigotmc.org/resources/coins.33382/'
+description: 'Coins is a plugin that allows players to collect coins for killing mobs and mining precious blocks. It also comes with the ability to withdraw balance into physical coins.'
+api-version: '1.19'
 authors: [JustEli]
 softdepend: [Vault, Treasury, WorldGuard, mcMMO, MythicMobs, ItemsAdder]
 commands:

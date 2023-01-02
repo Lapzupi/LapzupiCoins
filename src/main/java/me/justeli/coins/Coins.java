@@ -42,7 +42,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 
-/** by Eli on 12/13/2016. **/
+/**
+ * by Eli on 12/13/2016.
+ **/
 public final class Coins
     extends JavaPlugin
 {
@@ -64,7 +66,7 @@ public final class Coins
     private static final String LACKING_ECONOMY = "There is no proper economy installed. Please install %s.";
 
     @Override
-    public void onEnable ()
+    public void onEnable()
     {
         long current = System.currentTimeMillis();
         Locale.setDefault(Locale.US);
@@ -82,7 +84,7 @@ public final class Coins
             console(Level.SEVERE, USING_BUKKIT);
             disablePlugin(USING_BUKKIT);
         }
-        
+
         this.economy = new Economies(this);
         for (String missingPlugin : this.economy.getMissingPluginNames())
         {
@@ -144,7 +146,7 @@ public final class Coins
         console(Level.INFO, "Initialized in " + (System.currentTimeMillis() - current) + "ms.");
     }
 
-    public void reload ()
+    public void reload()
     {
         if (!this.disabledReasons.isEmpty())
         {
@@ -172,14 +174,14 @@ public final class Coins
         if (Config.DETECT_LEGACY_COINS)
         {
             console(Level.WARNING, "Coins has been configured to detected legacy withdrawn coins, which are coins withdrawn before Coins version " +
-                    "1.11. It is recommended to tell your players to deposit all their legacy withdrawn coins, as support for legacy withdrawn " +
-                    "coins by this plugin will be dropped early 2023. If you do not wish to detect legacy withdrawn coins, you can set " +
-                    "`detect-legacy-coins` to false in the config, which is safer, and prevents possible exploits (that may occur if plugins are " +
-                    "installed that allow items to be renamed in color).");
+                "1.11. It is recommended to tell your players to deposit all their legacy withdrawn coins, as support for legacy withdrawn " +
+                "coins by this plugin will be dropped early 2023. If you do not wish to detect legacy withdrawn coins, you can set " +
+                "`detect-legacy-coins` to false in the config, which is safer, and prevents possible exploits (that may occur if plugins are " +
+                "installed that allow items to be renamed in color).");
         }
     }
 
-    private void noEconomySupport (String kind)
+    private void noEconomySupport(String kind)
     {
         line(Level.SEVERE);
 
@@ -189,17 +191,17 @@ public final class Coins
         disablePlugin(reason);
     }
 
-    private void line (Level type)
+    private void line(Level type)
     {
         console(type, "------------------------------------------------------------------");
     }
 
-    private void disablePlugin (String reason)
+    private void disablePlugin(String reason)
     {
         disabledReasons.add(reason);
     }
 
-    private void versionChecker ()
+    private void versionChecker()
     {
         if (!Config.CHECK_FOR_UPDATES)
             return;
@@ -216,17 +218,17 @@ public final class Coins
             line(Level.WARNING);
             console(Level.WARNING, "  Detected an outdated version of Coins (" + currentVersion + " is installed).");
             console(Level.WARNING, "  The latest version is " + this.latestVersion.tag() + ", released on "
-                    + Util.DATE_FORMAT.format(new Date(this.latestVersion.time())) + ".");
+                + Util.DATE_FORMAT.format(new Date(this.latestVersion.time())) + ".");
             console(Level.WARNING, "  Download: " + getDescription().getWebsite());
             line(Level.WARNING);
         }
     }
 
-    private void registerEvents ()
+    private void registerEvents()
     {
         PluginManager manager = getServer().getPluginManager();
 
-        manager.registerEvents(PaperLib.isPaper()? new PaperEventListener(this) : new BukkitEventListener(this), this);
+        manager.registerEvents(PaperLib.isPaper() ? new PaperEventListener(this) : new BukkitEventListener(this), this);
 
         this.unfairMobHandler = new UnfairMobHandler(this);
         this.pickupHandler = new PickupHandler(this);
@@ -238,14 +240,14 @@ public final class Coins
         manager.registerEvents(new InteractionHandler(this), this);
         manager.registerEvents(new InventoryHandler(this), this);
         manager.registerEvents(new ModificationHandler(this), this);
-        manager.registerEvents(new ItemsAdderLoadListener(this),this);
+        manager.registerEvents(new ItemsAdderLoadListener(this), this);
         if (mmHook().isPresent())
         {
             manager.registerEvents(this.mmHook, this);
         }
     }
 
-    private void registerCommands ()
+    private void registerCommands()
     {
         CoinsCommand coinsCommand = new CoinsCommand(this);
 
@@ -261,42 +263,45 @@ public final class Coins
         }
     }
 
-    public void sync (final int ticks, final Runnable runnable)
+    public void sync(final int ticks, final Runnable runnable)
     {
         getServer().getScheduler().runTaskLater(this, runnable, ticks);
     }
 
-    public void console (Level type, String message)
+    public void console(Level type, String message)
     {
         getLogger().log(type, message);
     }
 
     private Economies economy;
-    public Economies economy ()
+
+    public Economies economy()
     {
         return this.economy;
     }
 
     private VersionChecker.Version latestVersion;
-    public Optional<VersionChecker.Version> latestVersion ()
+
+    public Optional<VersionChecker.Version> latestVersion()
     {
         return Optional.ofNullable(this.latestVersion);
     }
 
     private final List<String> disabledReasons = new ArrayList<>();
-    public List<String> disabledReasons ()
+
+    public List<String> disabledReasons()
     {
         return this.disabledReasons;
     }
 
     private boolean pluginDisabled = false;
 
-    public boolean isDisabled ()
+    public boolean isDisabled()
     {
         return this.pluginDisabled;
     }
 
-    public boolean toggleDisabled ()
+    public boolean toggleDisabled()
     {
         this.pluginDisabled = !this.pluginDisabled;
         return !this.pluginDisabled;
@@ -304,7 +309,7 @@ public final class Coins
 
     private MMHook mmHook;
 
-    public Optional<MMHook> mmHook ()
+    public Optional<MMHook> mmHook()
     {
         return Optional.ofNullable(this.mmHook);
     }
@@ -312,47 +317,47 @@ public final class Coins
 
     private BaseCoin baseCoin;
 
-    public BaseCoin getBaseCoin ()
+    public BaseCoin getBaseCoin()
     {
         return baseCoin;
     }
 
     private Settings settings;
 
-    public Settings settings ()
+    public Settings settings()
     {
         return settings;
     }
 
-    public MetaBuilder meta (ItemStack itemStack)
+    public MetaBuilder meta(ItemStack itemStack)
     {
         return new MetaBuilder(this, itemStack);
     }
 
     private CreateCoin createCoin;
 
-    public CreateCoin getCreateCoin ()
+    public CreateCoin getCreateCoin()
     {
         return createCoin;
     }
 
     private CoinUtil coinUtil;
 
-    public CoinUtil getCoinUtil ()
+    public CoinUtil getCoinUtil()
     {
         return coinUtil;
     }
 
     private PickupHandler pickupHandler;
 
-    public PickupHandler getPickupHandler ()
+    public PickupHandler getPickupHandler()
     {
         return pickupHandler;
     }
 
     private UnfairMobHandler unfairMobHandler;
 
-    public UnfairMobHandler getUnfairMobHandler ()
+    public UnfairMobHandler getUnfairMobHandler()
     {
         return unfairMobHandler;
     }
