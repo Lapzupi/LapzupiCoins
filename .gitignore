@@ -25,3 +25,4 @@ target/
 test/
 *.lnk
 .gradle
+build
