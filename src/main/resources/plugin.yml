@@ -5,7 +5,7 @@ website: '${website}'
 description: '${description}'
 api-version: '${api}'
 authors: [JustEli]
-softdepend: [Vault, Treasury, WorldGuard, mcMMO, MythicMobs, ItemsAdder]
+softdepend: [Vault, Treasury, WorldGuard, mcMMO, MythicMobs, ItemsAdder, Nova]
 commands:
   coins:
     description: 'Command for showing all available commands from Coins. Also used for various admin tools.'

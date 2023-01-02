@@ -9,27 +9,22 @@ import org.bukkit.event.Listener;
 /**
  * @author sarhatabaot
  */
-public class ItemsAdderLoadListener implements Listener
-{
+public class ItemsAdderLoadListener implements Listener {
     private final Coins coins;
-
-    public ItemsAdderLoadListener(final Coins coins)
-    {
+    
+    public ItemsAdderLoadListener(final Coins coins) {
         this.coins = coins;
     }
-
+    
     @EventHandler
     public void onItemsLoad(ItemsAdderLoadDataEvent event) {
         this.coins.reload();
         int warnings = this.coins.settings().getWarningCount();
         long ms = System.currentTimeMillis();
         this.coins.getLogger().info(() -> Message.RELOAD_SUCCESS.replace(Long.toString(System.currentTimeMillis() - ms)));
-        if (warnings != 0)
-        {
+        if (warnings != 0) {
             this.coins.getLogger().info(Message.MINOR_ISSUES::toString);
-        }
-        else
-        {
+        } else {
             this.coins.getLogger().info(Message.CHECK_SETTINGS::toString);
         }
     }
