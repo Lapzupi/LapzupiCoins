@@ -1,5 +1,7 @@
 package me.justeli.coins.config;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 
 /** Created by Eli on 4/24/2017. */
@@ -56,7 +58,7 @@ public enum Message
         return MESSAGES.computeIfAbsent(this, empty -> "Error while retrieving message");
     }
 
-    public String replace (CharSequence... replacements)
+    public String replace (@NotNull CharSequence... replacements)
     {
         String message = toString();
         for (int i = 0; i < replacements.length; i++)

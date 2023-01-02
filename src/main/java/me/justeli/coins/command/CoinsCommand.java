@@ -170,7 +170,7 @@ public final class CoinsCommand
         return true;
     }
 
-    private boolean perm (CommandSender sender, String permission)
+    private boolean perm (@NotNull CommandSender sender, String permission)
     {
         if (sender.hasPermission(permission))
             return true;
@@ -179,6 +179,7 @@ public final class CoinsCommand
         return false;
     }
 
+    @NotNull
     @Override
     public List<String> onTabComplete (@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args)
     {
@@ -363,7 +364,7 @@ public final class CoinsCommand
         }
     }
 
-    private void removeCoins (CommandSender sender, String[] args)
+    private void removeCoins (CommandSender sender, @NotNull String[] args)
     {
         double r = 0;
         List<Entity> mobs = Bukkit.getWorlds().get(0).getEntities();

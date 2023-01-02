@@ -19,7 +19,7 @@ public final class DisabledCommand
     private final Coins coins;
     private final Set<PluginCommand> commands = new HashSet<>();
 
-    public DisabledCommand (Coins coins)
+    public DisabledCommand (@NotNull Coins coins)
     {
         this.coins = coins;
         this.commands.add(coins.getCommand("coins"));

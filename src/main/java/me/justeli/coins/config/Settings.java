@@ -9,6 +9,8 @@ import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -259,7 +261,7 @@ public final class Settings
         });
     }
 
-    private Optional<Material> getMaterial (String name, String configKey)
+    private Optional<Material> getMaterial (@NotNull String name, String configKey)
     {
         Material material = Material.matchMaterial(name.replace(" ", "_").toUpperCase(Locale.ROOT).replace("COIN", "SUNFLOWER"));
 
@@ -274,7 +276,7 @@ public final class Settings
         return Optional.of(material);
     }
 
-    private Optional<EntityType> getEntityType (String name, String configKey)
+    private Optional<EntityType> getEntityType (@NotNull String name, String configKey)
     {
         try
         {
@@ -289,7 +291,7 @@ public final class Settings
         }
     }
 
-    private Optional<Sound> getSound (String name, String configKey)
+    private Optional<Sound> getSound (@NotNull String name, String configKey)
     {
         try
         {
@@ -324,6 +326,7 @@ public final class Settings
 
     private static final Converter<String, String> VAR_CONVERTER = CaseFormat.UPPER_UNDERSCORE.converterTo(CaseFormat.LOWER_HYPHEN);
 
+    @NotNull
     public Set<String> getKeys ()
     {
         TreeSet<String> values = new TreeSet<>();
@@ -401,6 +404,7 @@ public final class Settings
         return Optional.empty();
     }
 
+    @Nullable
     private JSONObject retrieveFallbackLanguage ()
     {
         try (InputStream inputStream = this.coins.getResource("language/english.json"))
@@ -415,6 +419,7 @@ public final class Settings
         return null;
     }
 
+    @Nullable
     private JSONObject jsonStream (InputStream inputStream)
     {
         try (InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8))

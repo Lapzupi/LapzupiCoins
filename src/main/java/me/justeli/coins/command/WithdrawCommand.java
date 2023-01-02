@@ -25,7 +25,7 @@ public final class WithdrawCommand
     private final Coins coins;
     private final PluginCommand command;
 
-    public WithdrawCommand (Coins coins)
+    public WithdrawCommand (@NotNull Coins coins)
     {
         this.coins = coins;
         this.command = coins.getCommand("withdraw");
@@ -119,6 +119,7 @@ public final class WithdrawCommand
         return true;
     }
 
+    @NotNull
     @Override
     public List<String> onTabComplete (@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args)
     {
@@ -134,7 +135,7 @@ public final class WithdrawCommand
         return numbers;
     }
 
-    private void noPerm (CommandSender sender)
+    private void noPerm (@NotNull CommandSender sender)
     {
         sender.sendMessage(Message.NO_PERMISSION.toString());
     }

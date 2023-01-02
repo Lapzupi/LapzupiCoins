@@ -14,7 +14,7 @@
 #  #  #  #  #  #  #  #
 
 # Show a message to update the plugin on start-up, if the plugin is outdated.
-check-for-updates: true
+check-for-updates: false
 
 # What language should the plugin use? And what is your server's currency symbol?
 #  All available languages can be found in the folder 'languages' inside the plugin
