@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 /** Created by Eli on 6 jan. 2020. */
+//TODO convert to NBTAPI
 public final class Skull
 {
     private static final HashMap<String, ItemStack> COIN = new HashMap<>();

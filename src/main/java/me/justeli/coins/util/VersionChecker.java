@@ -3,6 +3,8 @@ package me.justeli.coins.util;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -18,6 +20,8 @@ import java.util.Optional;
 public final class VersionChecker {
     private Version latestVersion;
     
+    @NotNull
+    @Contract(value = " -> new", pure = true)
     public Optional<Version> latestVersion() {
         return Optional.of(this.latestVersion);
     }

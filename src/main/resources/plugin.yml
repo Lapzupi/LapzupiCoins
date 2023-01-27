@@ -1,4 +1,4 @@
-main: 'me.justeli.coins.${name}'
+main: 'me.justeli.coins.Coins'
 name: '${name}'
 version: '${version}'
 website: '${website}'
