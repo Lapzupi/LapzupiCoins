@@ -207,7 +207,7 @@ public final class Coins
         if (!Config.CHECK_FOR_UPDATES)
             return;
 
-        VersionChecker checker = new VersionChecker("JustEli/Coins");
+        VersionChecker checker = new VersionChecker("Lapzupi/Coins");
         if (checker.latestVersion().isEmpty())
             return;
 
