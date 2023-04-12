@@ -97,16 +97,14 @@ public final class CoinsCommand
                     removeCoins(sender, args);
                 }
                 break;
-            case "lang":
-            case "language":
+            case "lang", "language":
                 if (perm(sender, Permission.COMMAND_LANGUAGE)) {
                     for (Message message : Message.values()) {
                         sender.sendMessage(message.toString());
                     }
                 }
                 break;
-            case "version":
-            case "update":
+            case "version", "update":
                 if (perm(sender, Permission.COMMAND_VERSION)) {
                     sender.sendMessage(String.format(COINS_TITLE, "Version"));
                     
