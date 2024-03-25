@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly ("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
+    compileOnly ("io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
     compileOnly ("net.md-5:bungeecord-api:1.19-R0.1-SNAPSHOT")
     compileOnly ("com.github.MilkBowl:VaultAPI:1.7.1")
     compileOnly ("com.github.lokka30.treasury:treasury-api:937ec97a98")
@@ -29,12 +29,12 @@ dependencies {
     compileOnly ("io.lumine.xikage:MythicMobs:4.9.1")
     compileOnly ("io.lumine:Mythic-Dist:5.2.0")
 
-    compileOnly ("com.github.LoneDev6:api-itemsadder:3.2.5")
+    compileOnly ("com.github.LoneDev6:api-itemsadder:3.4.1")
 
     implementation ("io.papermc:paperlib:1.0.7")
-    implementation ("org.bstats:bstats-bukkit:3.0.1")
+    implementation ("org.bstats:bstats-bukkit:3.0.2")
 
-    compileOnly ("xyz.xenondevs.nova:nova-api:0.12")
+    compileOnly ("xyz.xenondevs.nova:nova-api:0.14")
 }
 
 java {

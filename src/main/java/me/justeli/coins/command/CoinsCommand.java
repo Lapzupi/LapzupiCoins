@@ -407,7 +407,7 @@ public final class CoinsCommand
     public void dropCoins(@NotNull final Location location, final int radius, final int amount) {
         final Coins coins = this.coins;
         final Location dropLocation = location.clone().add(0.0, 0.5, 0.0);
-        final ItemStack coin = coins.getCreateCoin().dropped();
+        final ItemStack coin = this.coins.getCreateCoin().dropped();
         
         AtomicInteger ticks = new AtomicInteger();
         new BukkitRunnable() {
