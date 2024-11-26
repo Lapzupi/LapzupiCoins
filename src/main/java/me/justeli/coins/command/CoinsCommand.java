@@ -4,7 +4,7 @@ import me.justeli.coins.Coins;
 import me.justeli.coins.config.Config;
 import me.justeli.coins.config.Message;
 import me.justeli.coins.item.CoinUtil;
-import me.justeli.coins.util.Permission;
+import me.justeli.coins.util.PermissionNode;
 import me.justeli.coins.util.Util;
 import me.justeli.coins.util.VersionChecker;
 import net.md_5.bungee.api.ChatColor;
@@ -61,7 +61,7 @@ public final class CoinsCommand
         
         switch (args[0].toLowerCase(Locale.ROOT)) {
             case "reload":
-                if (perm(sender, Permission.COMMAND_RELOAD)) {
+                if (perm(sender, PermissionNode.COMMAND_RELOAD)) {
                     long ms = System.currentTimeMillis();
                     
                     this.coins.reload();
@@ -76,7 +76,7 @@ public final class CoinsCommand
                 }
                 break;
             case "settings":
-                if (perm(sender, Permission.COMMAND_SETTINGS)) {
+                if (perm(sender, PermissionNode.COMMAND_SETTINGS)) {
                     int page = args.length > 1 ? Util.parseInt(args[1]).orElse(1) : 1;
                     Set<String> keys = this.coins.settings().getKeys();
                     int totalPages = keys.size() / 8 + Math.min(keys.size() % 8, 1);
@@ -88,24 +88,24 @@ public final class CoinsCommand
                 }
                 break;
             case "drop":
-                if (perm(sender, Permission.COMMAND_DROP)) {
+                if (perm(sender, PermissionNode.COMMAND_DROP)) {
                     dropCoinsCommand(sender, args);
                 }
                 break;
             case "remove":
-                if (perm(sender, Permission.COMMAND_REMOVE)) {
+                if (perm(sender, PermissionNode.COMMAND_REMOVE)) {
                     removeCoins(sender, args);
                 }
                 break;
             case "lang", "language":
-                if (perm(sender, Permission.COMMAND_LANGUAGE)) {
+                if (perm(sender, PermissionNode.COMMAND_LANGUAGE)) {
                     for (Message message : Message.values()) {
                         sender.sendMessage(message.toString());
                     }
                 }
                 break;
             case "version", "update":
-                if (perm(sender, Permission.COMMAND_VERSION)) {
+                if (perm(sender, PermissionNode.COMMAND_VERSION)) {
                     sender.sendMessage(String.format(COINS_TITLE, "Version"));
                     
                     Optional<VersionChecker.Version> latestVersion = this.coins.latestVersion();
@@ -128,7 +128,7 @@ public final class CoinsCommand
                 }
                 break;
             case "toggle":
-                if (perm(sender, Permission.COMMAND_TOGGLE)) {
+                if (perm(sender, PermissionNode.COMMAND_TOGGLE)) {
                     Message abled = this.coins.toggleDisabled() ? Message.ENABLED : Message.DISABLED;
                     sender.sendMessage(Message.GLOBALLY_DISABLED_INFORM.replace(abled.toString()));
                     if (this.coins.isDisabled()) {
@@ -158,37 +158,37 @@ public final class CoinsCommand
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
         List<String> list = new ArrayList<>();
         if (args.length == 1) {
-            if (sender.hasPermission(Permission.COMMAND_DROP)) {
+            if (sender.hasPermission(PermissionNode.COMMAND_DROP)) {
                 list.add("drop");
             }
-            if (sender.hasPermission(Permission.COMMAND_RELOAD)) {
+            if (sender.hasPermission(PermissionNode.COMMAND_RELOAD)) {
                 list.add("reload");
             }
-            if (sender.hasPermission(Permission.COMMAND_SETTINGS)) {
+            if (sender.hasPermission(PermissionNode.COMMAND_SETTINGS)) {
                 list.add("settings");
             }
-            if (sender.hasPermission(Permission.COMMAND_VERSION)) {
+            if (sender.hasPermission(PermissionNode.COMMAND_VERSION)) {
                 list.add("version");
             }
-            if (sender.hasPermission(Permission.COMMAND_REMOVE)) {
+            if (sender.hasPermission(PermissionNode.COMMAND_REMOVE)) {
                 list.add("remove");
             }
-            if (sender.hasPermission(Permission.COMMAND_TOGGLE)) {
+            if (sender.hasPermission(PermissionNode.COMMAND_TOGGLE)) {
                 list.add("toggle");
             }
         } else if (args.length == 2) {
-            if (args[0].equalsIgnoreCase("remove") && sender.hasPermission(Permission.COMMAND_REMOVE)) {
+            if (args[0].equalsIgnoreCase("remove") && sender.hasPermission(PermissionNode.COMMAND_REMOVE)) {
                 list.add("all");
                 list.add("[radius]");
             }
-            if (args[0].equalsIgnoreCase("drop") && sender.hasPermission(Permission.COMMAND_DROP)) {
+            if (args[0].equalsIgnoreCase("drop") && sender.hasPermission(PermissionNode.COMMAND_DROP)) {
                 for (Player onlinePlayer : this.coins.getServer().getOnlinePlayers()) {
                     list.add(onlinePlayer.getName());
                 }
                 list.add("<x,y,z>");
                 list.add("<x,y,z,world>");
             }
-            if (args[0].equalsIgnoreCase("settings") && sender.hasPermission(Permission.COMMAND_SETTINGS)) {
+            if (args[0].equalsIgnoreCase("settings") && sender.hasPermission(PermissionNode.COMMAND_SETTINGS)) {
                 list.add("1");
                 list.add("2");
                 list.add("3");
@@ -197,11 +197,11 @@ public final class CoinsCommand
                 list.add("6");
             }
         } else if (args.length == 3) {
-            if (args[0].equalsIgnoreCase("remove") && sender.hasPermission(Permission.COMMAND_REMOVE)) {
+            if (args[0].equalsIgnoreCase("remove") && sender.hasPermission(PermissionNode.COMMAND_REMOVE)) {
                 list.add("<amount>");
             }
         } else if (args.length == 4) {
-            if (args[0].equalsIgnoreCase("remove") && sender.hasPermission(Permission.COMMAND_REMOVE)) {
+            if (args[0].equalsIgnoreCase("remove") && sender.hasPermission(PermissionNode.COMMAND_REMOVE)) {
                 list.add("[radius]");
             }
         }
@@ -363,37 +363,37 @@ public final class CoinsCommand
         String notice = "";
         if (this.coins.isDisabled()) {
             notice = " " + Message.GLOBALLY_DISABLED;
-        } else if (latestVersion.isPresent() && !latestVersion.get().tag().equals(currentVersion) && sender.hasPermission(Permission.COMMAND_VERSION)) {
+        } else if (latestVersion.isPresent() && !latestVersion.get().tag().equals(currentVersion) && sender.hasPermission(PermissionNode.COMMAND_VERSION)) {
             notice = " " + Message.OUTDATED.replace("/coins update");
         }
         
         sender.sendMessage(String.format(COINS_TITLE, currentVersion) + ChatColor.DARK_RED + notice);
         
-        if (sender.hasPermission(Permission.COMMAND_DROP)) {
+        if (sender.hasPermission(PermissionNode.COMMAND_DROP)) {
             sender.sendMessage(Message.DROP_USAGE.toString());
             lines++;
         }
-        if (sender.hasPermission(Permission.COMMAND_REMOVE)) {
+        if (sender.hasPermission(PermissionNode.COMMAND_REMOVE)) {
             sender.sendMessage(Message.REMOVE_USAGE.toString());
             lines++;
         }
-        if (sender.hasPermission(Permission.COMMAND_SETTINGS)) {
+        if (sender.hasPermission(PermissionNode.COMMAND_SETTINGS)) {
             sender.sendMessage(Message.SETTINGS_USAGE.toString());
             lines++;
         }
-        if (sender.hasPermission(Permission.COMMAND_RELOAD)) {
+        if (sender.hasPermission(PermissionNode.COMMAND_RELOAD)) {
             sender.sendMessage(Message.RELOAD_USAGE.toString());
             lines++;
         }
-        if (sender.hasPermission(Permission.COMMAND_VERSION)) {
+        if (sender.hasPermission(PermissionNode.COMMAND_VERSION)) {
             sender.sendMessage(Message.VERSION_CHECK.toString());
             lines++;
         }
-        if (sender.hasPermission(Permission.COMMAND_TOGGLE)) {
+        if (sender.hasPermission(PermissionNode.COMMAND_TOGGLE)) {
             sender.sendMessage(Message.TOGGLE_USAGE.toString());
             lines++;
         }
-        if (Config.ENABLE_WITHDRAW && sender.hasPermission(Permission.WITHDRAW)) {
+        if (Config.ENABLE_WITHDRAW && sender.hasPermission(PermissionNode.WITHDRAW)) {
             sender.sendMessage(Message.WITHDRAW_USAGE.toString());
             lines++;
         }
