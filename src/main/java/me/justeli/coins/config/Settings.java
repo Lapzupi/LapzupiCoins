@@ -339,7 +339,7 @@ public final class Settings
                 {
                     values.add(
                             VAR_CONVERTER.convert(field.getName())
-                                    + " &8\u00BB&7 "
+                                    + " &8»&7 "
                                     + Util.formatCurrency(field.get(Config.class).toString())
                     );
                 }

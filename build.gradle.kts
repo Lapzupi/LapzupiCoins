@@ -49,7 +49,7 @@ bukkit {
     description = "Coins is a plugin that allows players to collect coins for killing mobs and mining precious blocks. It also comes with the ability to withdraw balance into physical coins."
     website = "https://www.spigotmc.org/resources/coins.33382/"
     softDepend = listOf("Vault", "Treasury", "WorldGuard", "mcMMO", "MythicMobs", "ItemsAdder", "Nova")
-    apiVersion = "1.19"
+    apiVersion = "1.21"
     
     commands {
         register("coins") {

@@ -256,7 +256,7 @@ public final class CoinsCommand
                             world = player.getWorld();
                         }
                         if (world == null) {
-                            world = this.coins.getServer().getWorlds().get(0);
+                            world = this.coins.getServer().getWorlds().getFirst();
                         }
                         
                         location = new Location(world, x.get(), y.get(), z.get());
@@ -302,7 +302,7 @@ public final class CoinsCommand
     
     private void removeCoins(CommandSender sender, @NotNull String[] args) {
         double r = 0;
-        List<Entity> mobs = Bukkit.getWorlds().get(0).getEntities();
+        List<Entity> mobs = Bukkit.getWorlds().getFirst().getEntities();
         if (args.length >= 2 && sender instanceof Player) {
             if (!args[1].equalsIgnoreCase("all")) {
                 Optional<Integer> r2 = Util.parseInt(args[1]);

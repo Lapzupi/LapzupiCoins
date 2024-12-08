@@ -264,13 +264,13 @@ public final class DropHandler
 
         if (Config.DROP_EACH_COIN)
         {
-            amount *= (Util.getRandomMoneyAmount() + 0.5) * increment;
+            amount *= (int) ((Util.getRandomMoneyAmount() + 0.5) * increment);
             increment = 1;
         }
 
         if (player != null)
         {
-            amount *= Util.getMultiplier(player);
+            amount *= (int) Util.getMultiplier(player);
         }
 
         for (int i = 0; i < amount; i++)

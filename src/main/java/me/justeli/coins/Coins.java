@@ -59,32 +59,13 @@ public final class Coins
 
     private static final ExecutorService ASYNC_THREAD = Executors.newSingleThreadExecutor();
 
-    private static final String UNSUPPORTED_VERSION =
-        "Coins only supports Minecraft version 1.14 and higher. For 1.8.8 to 1.13.2 support, you can use Coins version 1.10.8 (without support).";
-    private static final String USING_BUKKIT = "You seem to be using Bukkit, but the plugin Coins requires at least Spigot! " +
-        "This prevents the plugin from showing the amount of money players pick up. Please use Spigot or Paper. Moving from Bukkit to " +
-        "Spigot will NOT cause any problems with other plugins, since Spigot only adds more features to Bukkit.";
+
     private static final String LACKING_ECONOMY = "There is no proper economy installed. Please install %s.";
 
     @Override
-    public void onEnable()
-    {
+    public void onEnable() {
         long current = System.currentTimeMillis();
         Locale.setDefault(Locale.US);
-
-        if (PaperLib.getMinecraftVersion() < 14)
-        {
-            line(Level.SEVERE);
-            console(Level.SEVERE, UNSUPPORTED_VERSION);
-            disablePlugin(UNSUPPORTED_VERSION);
-        }
-
-        if (!PaperLib.isSpigot() && !PaperLib.isPaper())
-        {
-            line(Level.SEVERE);
-            console(Level.SEVERE, USING_BUKKIT);
-            disablePlugin(USING_BUKKIT);
-        }
 
         this.economy = new Economies(this);
         for (String missingPlugin : this.economy.getMissingPluginNames())
