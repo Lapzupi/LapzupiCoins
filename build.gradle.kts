@@ -1,9 +1,9 @@
 import net.minecrell.pluginyml.bukkit.BukkitPluginDescription.Permission.Default;
 
 plugins {
-    id("java")
-    id("net.minecrell.plugin-yml.bukkit") version "0.5.3"
-    id("com.github.johnrengelman.shadow") version "8.1.0"
+    java
+    alias(libs.plugins.shadow)
+    alias(libs.plugins.bukkit.yml)
 }
 
 group = "me.justeli.coins"
@@ -20,26 +20,23 @@ repositories {
 }
 
 dependencies {
-    compileOnly ("io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
-    compileOnly ("net.md-5:bungeecord-api:1.19-R0.1-SNAPSHOT")
-    compileOnly ("com.github.MilkBowl:VaultAPI:1.7.1")
-    compileOnly ("com.github.lokka30.treasury:treasury-api:937ec97a98")
-    compileOnly ("com.mojang:authlib:1.5.21")
+    compileOnly(libs.paper.api)
+    compileOnly(libs.bungeecord.api)
+    compileOnly(libs.vault.api)
+    compileOnly(libs.treasury)
+    compileOnly(libs.authlib)
+    compileOnly(libs.mm.api)
+    compileOnly(libs.mm.dist)
+    compileOnly(libs.itemsadder)
+    compileOnly(libs.nova)
 
-    compileOnly ("io.lumine.xikage:MythicMobs:4.9.1")
-    compileOnly ("io.lumine:Mythic-Dist:5.2.0")
-
-    compileOnly ("com.github.LoneDev6:api-itemsadder:3.4.1")
-
-    implementation ("io.papermc:paperlib:1.0.7")
-    implementation ("org.bstats:bstats-bukkit:3.0.2")
-
-    compileOnly ("xyz.xenondevs.nova:nova-api:0.14")
+    implementation(libs.paper.lib)
+    implementation(libs.bstats)
 }
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
+        languageVersion.set(JavaLanguageVersion.of(21))
     }
 }
 
