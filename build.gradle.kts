@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "me.justeli.coins"
-version = "1.13.1"
+version = "1.13.1-L"
 
 repositories {
     mavenCentral()
